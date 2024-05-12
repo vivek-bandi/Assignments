@@ -3,8 +3,14 @@
  * During this time the thread should not be able to do anything else.
  * the function should return a promise just like before
  */
-
+let milliseconds;
 function sleep(milliseconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, milliseconds);
+  });
 }
+sleep(milliseconds).then(function () {
+  console.log("promise resolved");
+});
 
 module.exports = sleep;
