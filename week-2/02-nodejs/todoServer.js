@@ -39,11 +39,55 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require("express");
+const bodyParser = require("body-parser");
+cd;
+const app = express();
+
+app.use(bodyParser.json());
+
+const port = 3000;
+var todos = [
+  {
+    title: "Code",
+    id: 1,
+  },
+];
+app.get("/todos", function (req, res) {
+  for (let i = 0; i < todos.length; i++) {
+    const title = todos[i].title;
+    const id = todos[i].id;
+    res.json({
+      title,
+      id,
+    });
+  }
+});
+
+app.get("/todos/:fileName", function (req, res) {
+  const id = req.params.fileName;
+  let status = false;
+  let a;
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].id == id) {
+      status = true;
+      a = i;
+    }
+  }
+  if (status) {
+    const todo = todos[a].title;
+    res.json({
+      todo,
+    });
+  } else {
+    res.status(404).json({
+      msg: "not found",
+    });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is listening at http://localhost:${port}`);
+});
+
+module.exports = app;
